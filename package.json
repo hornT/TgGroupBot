@@ -1,0 +1,13 @@
+{
+    "scripts": {
+        "start": "node index.js",
+        "dev": "node -r dotenv/config index.js",
+        "test": "test"
+    },
+    "dependencies": {
+        "node-telegram-bot-api": "^0.51.0"
+    },
+    "devDependencies": {
+        "dotenv": "^8.2.0"
+    }
+}
