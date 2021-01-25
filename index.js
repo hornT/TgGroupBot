@@ -7,23 +7,30 @@ const bodyParser = require('body-parser');
 const app = express();
  
 app.use(bodyParser.json());
- 
-app.listen(process.env.PORT);
- 
-app.post('/' + bot.token, (req, res) => {
-  bot.processUpdate(req.body);
-  res.sendStatus(200);
-});
 
+console.log(`
+port:${config.PORT},
+BOT_ID:${config.BOT_ID},
+HEROKU_URL:${config.HEROKU_URL},
+BE_TEAM:${config.BE_TEAM}
+`);
+ 
+app.listen(config.PORT);
+ 
 let bot;
 
-const token = process.env.BOT_ID;
-if (process.env.NODE_ENV === 'production') {
+const token = config.BOT_ID;
+if (config.NODE_ENV === 'production') {
    bot = new TelegramBot(token);
-   bot.setWebHook(process.env.HEROKU_URL + bot.token);
+   bot.setWebHook(config.HEROKU_URL + bot.token);
 } else {
    bot = new TelegramBot(token, { polling: true });
 }
+
+app.post('/' + bot.token, (req, res) => {
+    bot.processUpdate(req.body);
+    res.sendStatus(200);
+  });
 
 bot.onText(/\/all/, (msg, match) => {
     processComand(msg, match, config.BE_TEAM);

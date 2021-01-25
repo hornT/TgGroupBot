@@ -4,6 +4,7 @@ const {
     FE_TEAM,
     QA_TEAM,
     PORT = 5500,
+    NODE_ENV,
 } = process.env;
 
 module.exports = {
@@ -12,4 +13,5 @@ module.exports = {
     FE_TEAM,
     QA_TEAM,
     PORT: Number(PORT),
+    NODE_ENV,
 }
