@@ -1,9 +1,29 @@
 const config = require('./config');
 const TelegramBot = require('node-telegram-bot-api')
 
-const bot = new TelegramBot(config.BOT_ID, {
-    polling: true,
+const express = require('express')
+const bodyParser = require('body-parser');
+ 
+const app = express();
+ 
+app.use(bodyParser.json());
+ 
+app.listen(process.env.PORT);
+ 
+app.post('/' + bot.token, (req, res) => {
+  bot.processUpdate(req.body);
+  res.sendStatus(200);
 });
+
+let bot;
+
+const token = process.env.BOT_ID;
+if (process.env.NODE_ENV === 'production') {
+   bot = new TelegramBot(token);
+   bot.setWebHook(process.env.HEROKU_URL + bot.token);
+} else {
+   bot = new TelegramBot(token, { polling: true });
+}
 
 bot.onText(/\/all/, (msg, match) => {
     processComand(msg, match, config.BE_TEAM);
