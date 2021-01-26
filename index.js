@@ -8,13 +8,6 @@ const app = express();
  
 app.use(bodyParser.json());
 
-console.log(`
-port:${config.PORT},
-BOT_ID:${config.BOT_ID},
-HEROKU_URL:${config.HEROKU_URL},
-BE_TEAM:${config.BE_TEAM}
-`);
- 
 app.listen(config.PORT);
  
 let bot;
